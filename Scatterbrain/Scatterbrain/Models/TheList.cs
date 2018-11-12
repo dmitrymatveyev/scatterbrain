@@ -16,6 +16,6 @@ namespace Scatterbrain.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public ObservableCollection<Subject> Subjects { get; } = new ObservableCollection<Subject>();
+        public ObservableCollection<Department> Departments { get; } = new ObservableCollection<Department>();
     }
 }
