@@ -53,8 +53,8 @@ namespace Scatterbrain
                 Description = "Subject 5"
             };
 
-            dep2.Subjects.Add(sub3);
             dep2.Subjects.Add(sub4);
+            dep2.Subjects.Add(sub5);
 
             var dep3 = new Department
             {

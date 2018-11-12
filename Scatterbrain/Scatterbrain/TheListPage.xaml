@@ -2,28 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              x:Class="Scatterbrain.TheListPage">
-    <sflistview:SfListView x:Name="listView" BindingContext="{Binding TheList}" ItemsSource="{Binding Departments}" DragStartMode="OnHold, OnDragIndicator" AutoFitMode="Height"
+    <sflistview:SfListView x:Name="listView" BindingContext="{Binding TheList}" ItemsSource="{Binding Departments}" DragStartMode="OnHold, OnDragIndicator"
+                           AutoFitMode="Height"
+                           SelectionMode="None"
                            Loaded="SfListView_Loaded"
                            ChildAdded="SfListView_ChildrenChanged"
                            ChildRemoved="SfListView_ChildrenChanged">
         <sflistview:SfListView.ItemTemplate>
             <DataTemplate>
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Text="{Binding Title}" Grid.Column="0" Grid.Row="0"/>
-                    <sflistview:DragIndicatorView Grid.Column="1" Grid.Row="0" ListView="{x:Reference listView}">
-                        <Label Text="Pull Up/Down"/>
-                    </sflistview:DragIndicatorView>
-                    <sflistview:SfListView ItemsSource="{Binding Subjects}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
+                    <Label Text="{Binding Title}" Grid.Row="0"/>
+                    <sflistview:SfListView ItemsSource="{Binding Subjects}" Grid.Row="1"
                                            AutoFitMode="Height"
+                                           SelectionMode="None"
                                            Loaded="SfListView_Loaded"
                                            ChildAdded="SfListView_ChildrenChanged"
                                            ChildRemoved="SfListView_ChildrenChanged">
