@@ -2,36 +2,48 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
-             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
-             x:Class="Scatterbrain.TheListPage">
-    <sflistview:SfListView x:Name="listView" BindingContext="{Binding TheList}" ItemsSource="{Binding Departments}" DragStartMode="OnHold, OnDragIndicator"
-                           AutoFitMode="Height"
-                           SelectionMode="None"
-                           Loaded="SfListView_Loaded"
-                           ChildAdded="SfListView_ChildrenChanged"
-                           ChildRemoved="SfListView_ChildrenChanged">
-        <sflistview:SfListView.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Text="{Binding Title}" Grid.Row="0"/>
-                    <sflistview:SfListView ItemsSource="{Binding Subjects}" Grid.Row="1"
+             xmlns:behaviors="clr-namespace:Scatterbrain.Behaviors"
+             x:Class="Scatterbrain.TheListPage"
+             x:Name="root">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Text="+"/>
+        <sflistview:SfListView x:Name="departments"
+                               Grid.Row="1"
+                               BindingContext="{Binding TheList}"
+                               ItemsSource="{Binding Departments}"
+                               DragStartMode="OnHold, OnDragIndicator"
+                               AutoFitMode="Height"
+                               SelectionMode="None">
+            <sflistview:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="{Binding Title}"/>
+                        <sflistview:SfListView ItemsSource="{Binding Subjects}"
                                            AutoFitMode="Height"
-                                           SelectionMode="None"
-                                           Loaded="SfListView_Loaded"
-                                           ChildAdded="SfListView_ChildrenChanged"
-                                           ChildRemoved="SfListView_ChildrenChanged">
-                        <sflistview:SfListView.ItemTemplate>
-                            <DataTemplate>
-                                <Label Text="{Binding Description}"/>
-                            </DataTemplate>
-                        </sflistview:SfListView.ItemTemplate>
-                    </sflistview:SfListView>
-                </Grid>
-            </DataTemplate>
-        </sflistview:SfListView.ItemTemplate>
-    </sflistview:SfListView>
+                                           SelectionMode="None">
+                            <sflistview:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Description}" Grid.Column="0"/>
+                                        <Button Grid.Column="1" Text="X" Command="{Binding Source={x:Reference root}, Path=BindingContext.Delete}" CommandParameter="{Binding}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </sflistview:SfListView.ItemTemplate>
+                            <sflistview:SfListView.Behaviors>
+                                <behaviors:SubjectsBehavior Departments="{x:Reference departments}"/>
+                            </sflistview:SfListView.Behaviors>
+                        </sflistview:SfListView>
+                    </StackLayout>
+                </DataTemplate>
+            </sflistview:SfListView.ItemTemplate>
+        </sflistview:SfListView>
+    </Grid>
 </ContentPage>

@@ -28,6 +28,6 @@ namespace Scatterbrain.Models
             }
         }
 
-        public ObservableCollection<Subject> Subjects { get; set; } = new ObservableCollection<Subject>();
+        public ObservableCollection<Subject> Subjects { get; } = new ObservableCollection<Subject>();
     }
 }

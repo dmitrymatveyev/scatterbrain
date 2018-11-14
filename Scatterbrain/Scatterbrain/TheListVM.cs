@@ -1,10 +1,13 @@
 ﻿using Scatterbrain.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Scatterbrain
 {
@@ -75,6 +78,17 @@ namespace Scatterbrain
             theList.Departments.Add(dep3);
 
             TheList = theList;
+
+            Delete = new Command<Subject>(s =>
+            {
+                var dep = TheList.Departments.First(d => d.Title == s.Department);
+                if (dep.Subjects.Count == 1)
+                {
+                    TheList.Departments.Remove(dep);
+                    return;
+                }
+                dep.Subjects.Remove(s);
+            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -95,5 +109,7 @@ namespace Scatterbrain
                 NotifyPropertyChanged();
             }
         }
+
+        public ICommand Delete { get; }
     }
 }
