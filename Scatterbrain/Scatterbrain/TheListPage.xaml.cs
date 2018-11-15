@@ -18,6 +18,12 @@ namespace Scatterbrain
 		public TheListPage ()
 		{
 			InitializeComponent ();
+            departments.DragDropController.UpdateSource = true;
 		}
+
+        private async void AddSubject(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new AddSubject { BindingContext = root.BindingContext });
+        }
     }
 }

@@ -14,4 +14,10 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="16.3.0.29" />
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AddSubject.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

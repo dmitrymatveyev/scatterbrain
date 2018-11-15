@@ -10,12 +10,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Text="+"/>
+        <Button Grid.Row="0" Text="+" Clicked="AddSubject"/>
         <sflistview:SfListView x:Name="departments"
                                Grid.Row="1"
                                BindingContext="{Binding TheList}"
                                ItemsSource="{Binding Departments}"
-                               DragStartMode="OnHold, OnDragIndicator"
+                               DragStartMode="OnHold"
                                AutoFitMode="Height"
                                SelectionMode="None">
             <sflistview:SfListView.ItemTemplate>
@@ -32,7 +32,8 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Description}" Grid.Column="0"/>
+                                        <Label Text="{Binding Description}" Grid.Column="0" LineBreakMode="WordWrap"/>
+                                        <Editor Text="{Binding Description}" Grid.Column="0" IsVisible="False"/>
                                         <Button Grid.Column="1" Text="X" Command="{Binding Source={x:Reference root}, Path=BindingContext.Delete}" CommandParameter="{Binding}"/>
                                     </Grid>
                                 </DataTemplate>
