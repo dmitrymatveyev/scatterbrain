@@ -11,9 +11,9 @@
                 <models:Subject/>
             </StackLayout.BindingContext>
             <Label Text="Department"/>
-            <Entry Text="{Binding Department}"/>
+            <Entry Text="{Binding Department}" Placeholder="Grocery"/>
             <Label Text="Subject"/>
-            <Entry Text="{Binding Description}"/>
+            <Entry Text="{Binding Description}" Placeholder="Garlic"/>
             <Button Text="Remember" Command="{Binding Source={x:Reference root}, Path=BindingContext.Add}" CommandParameter="{Binding}" Clicked="Close"/>
             <Button Text="Nevermind" Clicked="Close"/>
         </StackLayout>

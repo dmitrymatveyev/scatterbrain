@@ -9,6 +9,8 @@ namespace Scatterbrain
     {
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDMwNzBAMzEzNjJlMzMyZTMwZmVlUXlneGZ5Qk8xNlVwUjJNS1Q5QUlmWmFqTDAzQ3N1bFZXeXlCODlRVT0=");
+
             InitializeComponent();
 
             MainPage = new TheListPage
