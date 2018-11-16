@@ -10,12 +10,12 @@
             <StackLayout.BindingContext>
                 <models:Subject/>
             </StackLayout.BindingContext>
-            <Label Text="Department"/>
-            <Entry Text="{Binding Department}" Placeholder="Grocery"/>
-            <Label Text="Subject"/>
-            <Entry Text="{Binding Description}" Placeholder="Garlic"/>
-            <Button Text="Remember" Command="{Binding Source={x:Reference root}, Path=BindingContext.Add}" CommandParameter="{Binding}" Clicked="Close"/>
-            <Button Text="Nevermind" Clicked="Close"/>
+            <Label Text="Отдел"/>
+            <Entry Text="{Binding Department}" Placeholder="Бакалея"/>
+            <Label Text="Товар"/>
+            <Entry Text="{Binding Description}" Placeholder="Чеснок"/>
+            <Button Text="Запомнить" Command="{Binding Source={x:Reference root}, Path=BindingContext.Add}" CommandParameter="{Binding}" Clicked="Close"/>
+            <Button Text="Неважно" Clicked="Close"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

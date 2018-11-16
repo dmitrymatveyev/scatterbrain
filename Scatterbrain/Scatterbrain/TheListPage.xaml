@@ -45,6 +45,9 @@
                     </StackLayout>
                 </DataTemplate>
             </sflistview:SfListView.ItemTemplate>
+            <!--<sflistview:SfListView.Behaviors>
+                <behaviors:DepartmentsBehavior/>
+            </sflistview:SfListView.Behaviors>-->
         </sflistview:SfListView>
     </Grid>
 </ContentPage>
