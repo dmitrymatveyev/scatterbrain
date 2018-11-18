@@ -1,6 +1,8 @@
-﻿using Scatterbrain.Models;
+﻿using Scatterbrain.Controls;
+using Scatterbrain.Models;
 using Syncfusion.ListView.XForms;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -12,35 +14,31 @@ using Xamarin.Forms;
 
 namespace Scatterbrain.Behaviors
 {
-    public class SubjectsBehavior : SfListViewBehavior
+    public class SubjectsBehavior : Behavior<JustListView>
     {
         public SfListView Departments { get; set; }
-        public SfListView Subjects { get; set; }
 
-        protected override void OnAttachedTo(SfListView lv)
+        protected override void OnAttachedTo(JustListView lv)
         {
             base.OnAttachedTo(lv);
-            Subjects = lv;
-            Subjects.Loaded += ObserveSubjectsLoaded;
+            lv.BindingContextChanged += Changed;
         }
 
-        protected override void OnDetachingFrom(SfListView lv)
+        protected override void OnDetachingFrom(JustListView lv)
         {
             base.OnDetachingFrom(lv);
-            Subjects.Loaded -= ObserveSubjectsLoaded;
+            lv.BindingContextChanged -= Changed;
         }
 
-        private void ObserveSubjectsLoaded(object sender, ListViewLoadedEventArgs e)
+        private void Changed(object sender, EventArgs e)
         {
-            var itemsSorce = ((SfListView)sender).ItemsSource as ObservableCollection<Subject>;
-            itemsSorce.CollectionChanged += ObserveItemsSource;
-            ObserveItemsSource(null, null);
-        }
-
-        private void ObserveItemsSource(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            UpdateListView(Subjects);
-            UpdateListView(Departments);
+            var lv = (JustListView)sender;
+            var collection = (INotifyCollectionChanged)lv.ItemsSource;
+            // TODO: extract
+            collection.CollectionChanged += (s, args) =>
+            {
+                Departments.RefreshListViewItem();
+            };
         }
     }
 }

@@ -12,14 +12,14 @@ using Xamarin.Forms.Xaml;
 
 namespace Scatterbrain
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TheListPage : ContentPage
-	{
-		public TheListPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class TheListPage : ContentPage
+    {
+        public TheListPage()
+        {
+            InitializeComponent();
             departments.DragDropController.UpdateSource = true;
-		}
+        }
 
         private async void AddSubject(object sender, EventArgs e)
         {

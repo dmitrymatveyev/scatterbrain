@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:behaviors="clr-namespace:Scatterbrain.Behaviors"
+             xmlns:controls="clr-namespace:Scatterbrain.Controls"
              x:Class="Scatterbrain.TheListPage"
              x:Name="root">
     <Grid>
@@ -20,12 +21,10 @@
                                SelectionMode="None">
             <sflistview:SfListView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Vertical">
+                    <StackLayout VerticalOptions="StartAndExpand">
                         <Label Text="{Binding Title}"/>
-                        <sflistview:SfListView ItemsSource="{Binding Subjects}"
-                                           AutoFitMode="Height"
-                                           SelectionMode="None">
-                            <sflistview:SfListView.ItemTemplate>
+                        <controls:JustListView ItemsSource="{Binding Subjects}" VerticalOptions="StartAndExpand">
+                            <controls:JustListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -37,17 +36,14 @@
                                         <Button Grid.Column="1" Text="X" Command="{Binding Source={x:Reference root}, Path=BindingContext.Delete}" CommandParameter="{Binding}"/>
                                     </Grid>
                                 </DataTemplate>
-                            </sflistview:SfListView.ItemTemplate>
-                            <sflistview:SfListView.Behaviors>
+                            </controls:JustListView.ItemTemplate>
+                            <controls:JustListView.Behaviors>
                                 <behaviors:SubjectsBehavior Departments="{x:Reference departments}"/>
-                            </sflistview:SfListView.Behaviors>
-                        </sflistview:SfListView>
+                            </controls:JustListView.Behaviors>
+                        </controls:JustListView>
                     </StackLayout>
                 </DataTemplate>
             </sflistview:SfListView.ItemTemplate>
-            <!--<sflistview:SfListView.Behaviors>
-                <behaviors:DepartmentsBehavior/>
-            </sflistview:SfListView.Behaviors>-->
         </sflistview:SfListView>
     </Grid>
 </ContentPage>
