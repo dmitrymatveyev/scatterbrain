@@ -11,11 +11,15 @@
                 <models:Subject/>
             </StackLayout.BindingContext>
             <Label Text="Отдел"/>
-            <Entry Text="{Binding Department}" Placeholder="Бакалея"/>
+            <Entry Text="{Binding Department}" Placeholder="Бакалея" Keyboard="{Binding Capitalized, Source={x:Reference root}}"/>
             <Label Text="Товар"/>
-            <Entry Text="{Binding Description}" Placeholder="Чеснок"/>
-            <Button Text="Запомнить" Command="{Binding Source={x:Reference root}, Path=BindingContext.Add}" CommandParameter="{Binding}" Clicked="Close"/>
-            <Button Text="Неважно" Clicked="Close"/>
+            <Entry Text="{Binding Description}" Placeholder="Чеснок" Keyboard="{x:Static Keyboard.Text}"/>
+            <Button Text="Запомнить"
+                    BackgroundColor="LightGreen"
+                    CornerRadius="3"
+                    Command="{Binding BindingContext.Add, Source={x:Reference root}}"
+                    CommandParameter="{Binding}" Clicked="Close"/>
+            <Button Text="Неважно" BackgroundColor="LightCoral" CornerRadius="3" Clicked="Close"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

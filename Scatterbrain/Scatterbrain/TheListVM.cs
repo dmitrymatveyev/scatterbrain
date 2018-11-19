@@ -17,7 +17,7 @@ namespace Scatterbrain
         {
             Delete = new Command<Subject>(s =>
             {
-                var dep = TheList.Departments.First(d => d.Title == s.Department);
+                var dep = TheList.Departments.First(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
                 if (dep.Subjects.Count == 1)
                 {
                     TheList.Departments.Remove(dep);
@@ -28,7 +28,7 @@ namespace Scatterbrain
 
             Add = new Command<Subject>(s =>
             {
-                var dep = TheList.Departments.FirstOrDefault(d => d.Title == s.Department);
+                var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
                 if (dep == null)
                 {
                     dep = new Department { Title = s.Department };

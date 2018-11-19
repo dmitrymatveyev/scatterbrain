@@ -17,6 +17,8 @@ namespace Scatterbrain
 			InitializeComponent ();
 		}
 
+        public Keyboard Capitalized { get; } = Keyboard.Create(KeyboardFlags.CapitalizeCharacter);
+
         private async void Close(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
