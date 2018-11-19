@@ -21,9 +21,9 @@
                                SelectionMode="None">
             <sflistview:SfListView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout VerticalOptions="StartAndExpand">
+                    <StackLayout>
                         <Label Text="{Binding Title}"/>
-                        <controls:JustListView ItemsSource="{Binding Subjects}" VerticalOptions="StartAndExpand">
+                        <controls:JustListView ItemsSource="{Binding Subjects}">
                             <controls:JustListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -33,7 +33,10 @@
                                         </Grid.ColumnDefinitions>
                                         <Label Text="{Binding Description}" Grid.Column="0" LineBreakMode="WordWrap"/>
                                         <Editor Text="{Binding Description}" Grid.Column="0" IsVisible="False"/>
-                                        <Button Grid.Column="1" Text="X" Command="{Binding Source={x:Reference root}, Path=BindingContext.Delete}" CommandParameter="{Binding}"/>
+                                        <Button Grid.Column="1"
+                                                Text="X"
+                                                Command="{Binding Source={x:Reference root}, Path=BindingContext.Delete}"
+                                                CommandParameter="{Binding}"/>
                                     </Grid>
                                 </DataTemplate>
                             </controls:JustListView.ItemTemplate>

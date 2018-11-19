@@ -21,24 +21,27 @@ namespace Scatterbrain.Behaviors
         protected override void OnAttachedTo(JustListView lv)
         {
             base.OnAttachedTo(lv);
-            lv.BindingContextChanged += Changed;
+            lv.BindingContextChanged += OnBindingContextChanged;
         }
 
         protected override void OnDetachingFrom(JustListView lv)
         {
             base.OnDetachingFrom(lv);
-            lv.BindingContextChanged -= Changed;
+            lv.BindingContextChanged -= OnBindingContextChanged;
+            var collection = (INotifyCollectionChanged)lv.ItemsSource;
+            collection.CollectionChanged -= OnCollectionChanged;
         }
 
-        private void Changed(object sender, EventArgs e)
+        private void OnBindingContextChanged(object sender, EventArgs e)
         {
             var lv = (JustListView)sender;
             var collection = (INotifyCollectionChanged)lv.ItemsSource;
-            // TODO: extract
-            collection.CollectionChanged += (s, args) =>
-            {
-                Departments.RefreshListViewItem();
-            };
+            collection.CollectionChanged += OnCollectionChanged;
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Departments.RefreshListViewItem();
         }
     }
 }
