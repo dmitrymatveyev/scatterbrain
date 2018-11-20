@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:models="clr-namespace:Scatterbrain.Models"
+             xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              x:Class="Scatterbrain.AddSubject"
              x:Name="root">
     <ContentPage.Content>
@@ -11,7 +12,9 @@
                 <models:Subject/>
             </StackLayout.BindingContext>
             <Label Text="Отдел"/>
-            <Entry Text="{Binding Department}" Placeholder="Бакалея" Keyboard="{Binding Capitalized, Source={x:Reference root}}"/>
+            <autocomplete:SfAutoComplete Text="{Binding Department}"
+                                         Keyboard="{Binding Capitalized, Source={x:Reference root}}"
+                                         DataSource="{Binding BindingContext.Departments, Source={x:Reference root}}"/>
             <Label Text="Товар"/>
             <Entry Text="{Binding Description}" Placeholder="Чеснок" Keyboard="{x:Static Keyboard.Text}"/>
             <Button Text="Запомнить"

@@ -6,19 +6,15 @@
              xmlns:controls="clr-namespace:Scatterbrain.Controls"
              x:Class="Scatterbrain.TheListPage"
              x:Name="root">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Button Grid.Row="0" Text="+" BackgroundColor="LightGreen" CornerRadius="3" Clicked="AddSubject"/>
+    <StackLayout>
+        <Button Text="Добавить" BackgroundColor="LightGreen" CornerRadius="3" Clicked="AddSubject"/>
         <sflistview:SfListView x:Name="departments"
-                               Grid.Row="1"
                                BindingContext="{Binding TheList}"
                                ItemsSource="{Binding Departments}"
                                DragStartMode="OnHold"
                                AutoFitMode="Height"
-                               SelectionMode="None">
+                               SelectionMode="None"
+                               VerticalOptions="StartAndExpand">
             <sflistview:SfListView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Margin="0,3,0,0" Spacing="1">
@@ -54,5 +50,5 @@
                 </DataTemplate>
             </sflistview:SfListView.ItemTemplate>
         </sflistview:SfListView>
-    </Grid>
+    </StackLayout>
 </ContentPage>

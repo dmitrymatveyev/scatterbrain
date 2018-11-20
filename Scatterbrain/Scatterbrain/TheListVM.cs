@@ -21,6 +21,7 @@ namespace Scatterbrain
                 if (dep.Subjects.Count == 1)
                 {
                     TheList.Departments.Remove(dep);
+                    Departments.Add(s.Department);
                     return;
                 }
                 dep.Subjects.Remove(s);
@@ -33,6 +34,7 @@ namespace Scatterbrain
                 {
                     dep = new Department { Title = s.Department };
                     TheList.Departments.Add(dep);
+                    Departments.Add(s.Department);
                 }
                 dep.Subjects.Add(s);
             });
@@ -46,6 +48,8 @@ namespace Scatterbrain
         }
 
         public TheList TheList { get; } = new TheList();
+
+        public ObservableCollection<string> Departments { get; } = new ObservableCollection<string>();
 
         public ICommand Delete { get; }
 
