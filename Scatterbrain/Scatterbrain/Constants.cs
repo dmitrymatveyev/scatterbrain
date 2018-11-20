@@ -6,6 +6,6 @@ namespace Scatterbrain
 {
     public class Constants
     {
-        public const string TheListTableName = "TheList";
+        public const string TheListTableName = "the_list";
     }
 }
