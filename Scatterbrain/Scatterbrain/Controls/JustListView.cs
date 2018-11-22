@@ -47,7 +47,7 @@ namespace Scatterbrain.Controls
 
             if (oldValue is INotifyCollectionChanged oldObservable)
             {
-                oldObservable.CollectionChanged -= itemsSourceChanged;
+                oldObservable.CollectionChanged -= _subscriptions[oldObservable];
             }
 
             if (newValue == null)
@@ -62,8 +62,18 @@ namespace Scatterbrain.Controls
             if (newValue is INotifyCollectionChanged newObservable)
             {
                 newObservable.CollectionChanged += itemsSourceChanged;
+                if (_subscriptions.ContainsKey(newObservable))
+                {
+                    _subscriptions[newObservable] = itemsSourceChanged;
+                }
+                else
+                {
+                    _subscriptions.Add(newObservable, itemsSourceChanged);
+                }
             }
         }
+
+        private static readonly Dictionary<object, NotifyCollectionChangedEventHandler> _subscriptions = new Dictionary<object, NotifyCollectionChangedEventHandler>();
 
         private static View ComposeView(JustListView lv, object context)
         {

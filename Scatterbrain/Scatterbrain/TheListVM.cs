@@ -17,7 +17,7 @@ namespace Scatterbrain
         public TheListVM()
         {
             var theList = TheListRepo.Read().GetAwaiter().GetResult();
-            if(theList != null)
+            if (theList != null)
             {
                 theList.Departments.Select(d => d.Title).ToList().ForEach(Departments.Add);
                 TheList = theList;
@@ -31,7 +31,7 @@ namespace Scatterbrain
 
             TheList.Departments.CollectionChanged += (s, e) =>
             {
-                if (self)
+                if (self || e.Action != System.Collections.Specialized.NotifyCollectionChangedAction.Add)
                 {
                     return;
                 }
