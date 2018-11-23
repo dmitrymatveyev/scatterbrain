@@ -20,7 +20,7 @@
             <Button Text="Запомнить"
                     BackgroundColor="LightGreen"
                     CornerRadius="3"
-                    Command="{Binding BindingContext.Add, Source={x:Reference root}}"
+                    Command="{Binding AddCommand, Source={x:Reference root}}"
                     CommandParameter="{Binding}" Clicked="Close"/>
             <Button Text="Неважно" BackgroundColor="LightCoral" CornerRadius="3" Clicked="Close"/>
         </StackLayout>

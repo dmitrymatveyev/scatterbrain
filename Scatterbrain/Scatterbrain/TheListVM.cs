@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using TheListRepo = Scatterbrain.Data.TheListRepository;
+using System.Threading.Tasks.Dataflow;
 
 namespace Scatterbrain
 {
@@ -38,28 +39,40 @@ namespace Scatterbrain
                 TheListRepo.Write(TheList).GetAwaiter().GetResult();
             };
 
-            Delete = new Command<Subject>(s =>
+            var deleteBlock = new ActionBlock<Subject>(s =>
             {
                 try
                 {
                     self = true;
-                    var dep = TheList.Departments.First(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
-                    if (dep.Subjects.Count == 1)
+                    var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
+                    if(dep == null)
                     {
-                        TheList.Departments.Remove(dep);
-                        Departments.Remove(s.Department);
                         return;
                     }
-                    dep.Subjects.Remove(s);
+                    if (dep.Subjects.Count == 1)
+                    {
+                        OnUI(() => TheList.Departments.Remove(dep));
+                        OnUI(() => Departments.Remove(s.Department));
+                    }
+                    else
+                    {
+                        if (!dep.Subjects.Contains(s))
+                        {
+                            return;
+                        }
+                        OnUI(() => dep.Subjects.Remove(s));
+                    }
                     TheListRepo.Write(TheList).GetAwaiter().GetResult();
                 }
                 finally
                 {
                     self = false;
                 }
-            });
+            },
+            new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
+            Delete = new Command<Subject>(s => deleteBlock.Post(s));
 
-            Add = new Command<Subject>(s =>
+            var addBlock = new ActionBlock<Subject>(s =>
             {
                 try
                 {
@@ -68,17 +81,28 @@ namespace Scatterbrain
                     if (dep == null)
                     {
                         dep = new Department { Title = s.Department };
-                        TheList.Departments.Add(dep);
+                        OnUI(() => TheList.Departments.Add(dep));
                         Departments.Add(s.Department);
                     }
-                    dep.Subjects.Add(s);
+                    if (dep.Subjects.Contains(s))
+                    {
+                        return;
+                    }
+                    OnUI(() => dep.Subjects.Add(s));
                     TheListRepo.Write(TheList).GetAwaiter().GetResult();
                 }
                 finally
                 {
                     self = false;
                 }
-            });
+            },
+            new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
+            Add = new Command<Subject>(s => addBlock.Post(s));
+        }
+
+        private void OnUI(Action action)
+        {
+            Device.BeginInvokeOnMainThread(action);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

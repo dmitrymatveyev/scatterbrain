@@ -23,7 +23,9 @@ namespace Scatterbrain
 
         private async void AddSubject(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new AddSubject { BindingContext = root.BindingContext });
+            var add = new AddSubject();
+            add.SetBinding(Scatterbrain.AddSubject.AddCommandProperty, new Binding { Source = root.BindingContext, Path = "Add" });
+            await Navigation.PushModalAsync(add);
         }
     }
 }
