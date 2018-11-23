@@ -4,10 +4,11 @@
              xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:behaviors="clr-namespace:Scatterbrain.Behaviors"
              xmlns:controls="clr-namespace:Scatterbrain.Controls"
+             xmlns:localization="clr-namespace:Scatterbrain.Localization"
              x:Class="Scatterbrain.TheListPage"
              x:Name="root">
     <StackLayout>
-        <Button Text="Добавить" BackgroundColor="LightGreen" CornerRadius="3" Clicked="AddSubject"/>
+        <Button Text="{localization:Translate ADD}" BackgroundColor="LightGreen" CornerRadius="3" Clicked="AddSubject"/>
         <sflistview:SfListView x:Name="departments"
                                BindingContext="{Binding TheList}"
                                ItemsSource="{Binding Departments}"

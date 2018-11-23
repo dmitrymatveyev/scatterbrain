@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Scatterbrain.Localization;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +11,13 @@ namespace Scatterbrain
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NDMwNzBAMzEzNjJlMzMyZTMwZmVlUXlneGZ5Qk8xNlVwUjJNS1Q5QUlmWmFqTDAzQ3N1bFZXeXlCODlRVT0=");
+
+            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            {
+                var ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+                AppResources.Culture = ci;
+                DependencyService.Get<ILocalize>().SetLocale(ci);
+            }
 
             InitializeComponent();
 

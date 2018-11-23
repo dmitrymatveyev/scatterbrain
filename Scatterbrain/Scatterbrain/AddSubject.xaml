@@ -4,6 +4,7 @@
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:models="clr-namespace:Scatterbrain.Models"
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+             xmlns:localization="clr-namespace:Scatterbrain.Localization"
              x:Class="Scatterbrain.AddSubject"
              x:Name="root">
     <ContentPage.Content>
@@ -11,18 +12,18 @@
             <StackLayout.BindingContext>
                 <models:Subject/>
             </StackLayout.BindingContext>
-            <Label Text="Отдел"/>
+            <Label Text="{localization:Translate DEPARTMENT}"/>
             <autocomplete:SfAutoComplete Text="{Binding Department}"
                                          Keyboard="{Binding Capitalized, Source={x:Reference root}}"
                                          DataSource="{Binding BindingContext.Departments, Source={x:Reference root}}"/>
-            <Label Text="Товар"/>
-            <Entry Text="{Binding Description}" Placeholder="Чеснок" Keyboard="{x:Static Keyboard.Text}"/>
-            <Button Text="Запомнить"
+            <Label Text="{localization:Translate SUBJECT}"/>
+            <Entry Text="{Binding Description}" Placeholder="{localization:Translate GARLIC}" Keyboard="{x:Static Keyboard.Text}"/>
+            <Button Text="{localization:Translate REMEMBER}"
                     BackgroundColor="LightGreen"
                     CornerRadius="3"
                     Command="{Binding AddCommand, Source={x:Reference root}}"
                     CommandParameter="{Binding}" Clicked="Close"/>
-            <Button Text="Неважно" BackgroundColor="LightCoral" CornerRadius="3" Clicked="Close"/>
+            <Button Text="{localization:Translate NEVERMIND}" BackgroundColor="LightCoral" CornerRadius="3" Clicked="Close"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
