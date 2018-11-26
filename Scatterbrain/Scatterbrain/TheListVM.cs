@@ -82,7 +82,7 @@ namespace Scatterbrain
                     {
                         dep = new Department { Title = s.Department };
                         OnUI(() => TheList.Departments.Add(dep));
-                        Departments.Add(s.Department);
+                        OnUI(() => Departments.Add(s.Department));
                     }
                     if (dep.Subjects.Contains(s))
                     {

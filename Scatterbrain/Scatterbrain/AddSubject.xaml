@@ -15,7 +15,7 @@
             <Label Text="{localization:Translate DEPARTMENT}"/>
             <autocomplete:SfAutoComplete Text="{Binding Department}"
                                          Keyboard="{Binding Capitalized, Source={x:Reference root}}"
-                                         DataSource="{Binding BindingContext.Departments, Source={x:Reference root}}"/>
+                                         DataSource="{Binding Departments, Source={x:Reference root}}"/>
             <Label Text="{localization:Translate SUBJECT}"/>
             <Entry Text="{Binding Description}" Placeholder="{localization:Translate GARLIC}" Keyboard="{x:Static Keyboard.Text}"/>
             <Button Text="{localization:Translate REMEMBER}"

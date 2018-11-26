@@ -25,6 +25,7 @@ namespace Scatterbrain
         {
             var add = new AddSubject();
             add.SetBinding(Scatterbrain.AddSubject.AddCommandProperty, new Binding { Source = root.BindingContext, Path = "Add" });
+            add.SetBinding(Scatterbrain.AddSubject.DepartmentsProperty, new Binding { Source = root.BindingContext, Path = "Departments" });
             await Navigation.PushModalAsync(add);
         }
     }
