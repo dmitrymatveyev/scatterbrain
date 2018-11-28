@@ -41,60 +41,66 @@ namespace Scatterbrain
 
             var deleteBlock = new ActionBlock<Subject>(s =>
             {
-                try
+                var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
+                if (dep == null)
                 {
-                    self = true;
-                    var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
-                    if(dep == null)
+                    return;
+                }
+                OnUI(() =>
+                {
+                    try
                     {
-                        return;
-                    }
-                    if (dep.Subjects.Count == 1)
-                    {
-                        OnUI(() => TheList.Departments.Remove(dep));
-                        OnUI(() => Departments.Remove(s.Department));
-                    }
-                    else
-                    {
-                        if (!dep.Subjects.Contains(s))
+                        self = true;
+                        if (dep.Subjects.Count == 1)
                         {
-                            return;
+                            TheList.Departments.Remove(dep);
+                            Departments.Remove(s.Department);
                         }
-                        OnUI(() => dep.Subjects.Remove(s));
+                        else
+                        {
+                            if (!dep.Subjects.Contains(s))
+                            {
+                                return;
+                            }
+                            dep.Subjects.Remove(s);
+                        }
+                        TheListRepo.Write(TheList);
                     }
-                    TheListRepo.Write(TheList).GetAwaiter().GetResult();
-                }
-                finally
-                {
-                    self = false;
-                }
+                    finally
+                    {
+                        self = false;
+                    }
+                });
             },
             new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
             Delete = new Command<Subject>(s => deleteBlock.Post(s));
 
             var addBlock = new ActionBlock<Subject>(s =>
             {
-                try
+                var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
+                OnUI(() =>
                 {
-                    self = true;
-                    var dep = TheList.Departments.FirstOrDefault(d => string.Equals(d.Title, s.Department, StringComparison.InvariantCultureIgnoreCase));
-                    if (dep == null)
+                    try
                     {
-                        dep = new Department { Title = s.Department };
-                        OnUI(() => TheList.Departments.Add(dep));
-                        OnUI(() => Departments.Add(s.Department));
+                        self = true;
+                        if (dep == null)
+                        {
+                            dep = new Department { Title = s.Department };
+                            TheList.Departments.Add(dep);
+                            Departments.Add(s.Department);
+                        }
+                        if (dep.Subjects.Contains(s))
+                        {
+                            return;
+                        }
+                        dep.Subjects.Add(s);
+                        TheListRepo.Write(TheList);
                     }
-                    if (dep.Subjects.Contains(s))
+                    finally
                     {
-                        return;
+                        self = false;
                     }
-                    OnUI(() => dep.Subjects.Add(s));
-                    TheListRepo.Write(TheList).GetAwaiter().GetResult();
-                }
-                finally
-                {
-                    self = false;
-                }
+                });
             },
             new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
             Add = new Command<Subject>(s => addBlock.Post(s));
