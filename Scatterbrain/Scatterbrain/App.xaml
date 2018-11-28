@@ -8,6 +8,7 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontSize" Value="Large"/>
         </Style>
         <Style TargetType="Label">
             <Setter Property="LineBreakMode" Value="WordWrap"/>

@@ -8,21 +8,29 @@
              xmlns:controls="clr-namespace:Scatterbrain.Controls"
              x:Class="Scatterbrain.AddSubject"
              x:Name="root">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-            <StackLayout.BindingContext>
-                <models:Subject/>
-            </StackLayout.BindingContext>
-            <Label Text="{localization:Translate DEPARTMENT}"/>
-            <controls:AutoComplete Text="{Binding Department}"
-                                         DataSource="{Binding Departments, Source={x:Reference root}}"/>
-            <Label Text="{localization:Translate SUBJECT}"/>
-            <Entry Text="{Binding Description}" Placeholder="{localization:Translate GARLIC}" Keyboard="{x:Static Keyboard.Text}"/>
-            <Button Text="{localization:Translate REMEMBER}"
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+        <StackLayout.BindingContext>
+            <models:Subject/>
+        </StackLayout.BindingContext>
+        <Label Text="{localization:Translate DEPARTMENT}"/>
+        <!--TODO: implement string converter for TextSize-->
+        <controls:AutoComplete Text="{Binding Department}"
+                               DataSource="{Binding Departments, Source={x:Reference root}}"
+                               TextSize="18"/>
+        <Label Text="{localization:Translate SUBJECT}"/>
+        <Entry Text="{Binding Description}"
+               Placeholder="{localization:Translate GARLIC}" 
+               Keyboard="{x:Static Keyboard.Text}"
+               FontSize="Medium"/>
+        <Button Text="{localization:Translate REMEMBER}"
                     BackgroundColor="LightGreen"
                     Command="{Binding AddCommand, Source={x:Reference root}}"
                     CommandParameter="{Binding}" Clicked="Close"/>
-            <Button Text="{localization:Translate NEVERMIND}" BackgroundColor="LightCoral" Clicked="Close"/>
-        </StackLayout>
-    </ContentPage.Content>
+        <Button Text="{localization:Translate NEVERMIND}" BackgroundColor="LightCoral" Clicked="Close"/>
+    </StackLayout>
 </ContentPage>
