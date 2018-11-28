@@ -5,6 +5,7 @@
              xmlns:models="clr-namespace:Scatterbrain.Models"
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              xmlns:localization="clr-namespace:Scatterbrain.Localization"
+             xmlns:controls="clr-namespace:Scatterbrain.Controls"
              x:Class="Scatterbrain.AddSubject"
              x:Name="root">
     <ContentPage.Content>
@@ -13,17 +14,15 @@
                 <models:Subject/>
             </StackLayout.BindingContext>
             <Label Text="{localization:Translate DEPARTMENT}"/>
-            <autocomplete:SfAutoComplete Text="{Binding Department}"
-                                         Keyboard="{Binding Capitalized, Source={x:Reference root}}"
+            <controls:AutoComplete Text="{Binding Department}"
                                          DataSource="{Binding Departments, Source={x:Reference root}}"/>
             <Label Text="{localization:Translate SUBJECT}"/>
             <Entry Text="{Binding Description}" Placeholder="{localization:Translate GARLIC}" Keyboard="{x:Static Keyboard.Text}"/>
             <Button Text="{localization:Translate REMEMBER}"
                     BackgroundColor="LightGreen"
-                    CornerRadius="3"
                     Command="{Binding AddCommand, Source={x:Reference root}}"
                     CommandParameter="{Binding}" Clicked="Close"/>
-            <Button Text="{localization:Translate NEVERMIND}" BackgroundColor="LightCoral" CornerRadius="3" Clicked="Close"/>
+            <Button Text="{localization:Translate NEVERMIND}" BackgroundColor="LightCoral" Clicked="Close"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

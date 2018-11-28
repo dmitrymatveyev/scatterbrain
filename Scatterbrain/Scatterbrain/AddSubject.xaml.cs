@@ -33,8 +33,6 @@ namespace Scatterbrain
 
         private readonly ActionBlock<object> _closeBlock;
 
-        public Keyboard Capitalized { get; } = Keyboard.Create(KeyboardFlags.CapitalizeCharacter);
-
         public static BindableProperty AddCommandProperty =
             BindableProperty.Create("AddCommand", typeof(ICommand), typeof(AddSubject), null);
 
