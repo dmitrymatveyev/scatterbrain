@@ -19,9 +19,23 @@
         </StackLayout.BindingContext>
         <Label Text="{localization:Translate DEPARTMENT}"/>
         <!--TODO: implement string converter for TextSize-->
-        <controls:AutoComplete Text="{Binding Department}"
-                               DataSource="{Binding Departments, Source={x:Reference root}}"
-                               TextSize="18"/>
+        <controls:AutoComplete Text="{Binding Department}" DataSource="{Binding Departments, Source={x:Reference root}}" TextSize="18">
+            <controls:AutoComplete.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="X"
+                                Command="{Binding DeleteDepartmentCommand, Source={x:Reference root}}"
+                                CommandParameter="{Binding}"
+                                FontSize="Medium"
+                                BackgroundColor="White"
+                                HeightRequest="30"
+                                WidthRequest="30"
+                                VerticalOptions="Center"/>
+                        <Label Text="{Binding}" VerticalOptions="Center" Margin="10,0,0,0"/>
+                    </StackLayout>
+                </DataTemplate>
+            </controls:AutoComplete.ItemTemplate>
+        </controls:AutoComplete>
         <Label Text="{localization:Translate SUBJECT}"/>
         <Entry Text="{Binding Description}"
                Placeholder="{localization:Translate GARLIC}" 

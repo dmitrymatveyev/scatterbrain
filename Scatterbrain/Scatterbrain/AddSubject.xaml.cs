@@ -51,6 +51,15 @@ namespace Scatterbrain
             set { SetValue(DepartmentsProperty, value); }
         }
 
+        public static BindableProperty DeleteDepartmentCommandProperty =
+            BindableProperty.Create("DeleteDepartmentCommand", typeof(ICommand), typeof(AddSubject), null);
+
+        public ICommand DeleteDepartmentCommand
+        {
+            get { return (ICommand)GetValue(DeleteDepartmentCommandProperty); }
+            set { SetValue(DeleteDepartmentCommandProperty, value); }
+        }
+
         private void Close(object sender, EventArgs e)
         {
             _closeBlock.Post(null);

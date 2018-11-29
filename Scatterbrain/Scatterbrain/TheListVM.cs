@@ -20,12 +20,17 @@ namespace Scatterbrain
             var theList = TheListRepo.Read().GetAwaiter().GetResult();
             if (theList != null)
             {
-                theList.Departments.Select(d => d.Title).ToList().ForEach(Departments.Add);
                 TheList = theList;
             }
             else
             {
                 TheList = new TheList();
+            }
+
+            var departments = TheListRepo.ReadDepartments().GetAwaiter().GetResult();
+            if(departments != null)
+            {
+                departments.ForEach(Departments.Add);
             }
 
             var self = false;
@@ -54,7 +59,6 @@ namespace Scatterbrain
                         if (dep.Subjects.Count == 1)
                         {
                             TheList.Departments.Remove(dep);
-                            Departments.Remove(s.Department);
                         }
                         else
                         {
@@ -87,13 +91,17 @@ namespace Scatterbrain
                         {
                             dep = new Department { Title = s.Department };
                             TheList.Departments.Add(dep);
-                            Departments.Add(s.Department);
                         }
                         if (dep.Subjects.Contains(s))
                         {
                             return;
                         }
                         dep.Subjects.Add(s);
+                        if (!Departments.Contains(s.Department))
+                        {
+                            Departments.Add(s.Department);
+                            TheListRepo.WriteDepartments(Departments);
+                        }
                         TheListRepo.Write(TheList);
                     }
                     finally
@@ -104,6 +112,17 @@ namespace Scatterbrain
             },
             new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
             Add = new Command<Subject>(s => addBlock.Post(s));
+
+            var deleteDepBlock = new ActionBlock<string>(d =>
+            {
+                OnUI(() =>
+                {
+                    Departments.Remove(d);
+                    TheListRepo.WriteDepartments(Departments);
+                });
+            },
+            new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
+            DeleteDepartment = new Command<string>(d => deleteDepBlock.Post(d));
         }
 
         private void OnUI(Action action)
@@ -125,5 +144,7 @@ namespace Scatterbrain
         public ICommand Delete { get; }
 
         public ICommand Add { get; }
+
+        public ICommand DeleteDepartment { get; }
     }
 }
