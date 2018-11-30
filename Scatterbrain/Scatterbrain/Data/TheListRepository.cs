@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Scatterbrain.Data
 {
-    public class TheListRepository
+    public class ScatterbrainRepository
     {
         private static SQLiteConnection _db;
 
-        static TheListRepository()
+        static ScatterbrainRepository()
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             _db = new SQLiteConnection(Path.Combine(path, "ScatterbrainSQLite.db3"));
@@ -33,7 +33,7 @@ namespace Scatterbrain.Data
             }
         }
 
-        public static Task<Models.TheList> Read()
+        public static Task<Models.TheList> GetSubjects()
         {
             var items = _db.Table<TheList>().ToArray();
             var item = items.FirstOrDefault();
@@ -44,14 +44,14 @@ namespace Scatterbrain.Data
             return Task.FromResult(JsonConvert.DeserializeObject<Models.TheList>(item.Content));
         }
 
-        public static Task Write(Models.TheList theList)
+        public static Task StoreSubjects(Models.TheList theList)
         {
             _db.Table<TheList>().Connection.Execute($"DELETE FROM {Constants.TheListTableName};");
             _db.Insert(new TheList { Content = JsonConvert.SerializeObject(theList) });
             return Task.FromResult(0);
         }
 
-        public static Task<ObservableCollection<string>> ReadDepartments()
+        public static Task<ObservableCollection<string>> GetDepartments()
         {
             var items = _db.Table<Department>().ToArray();
             var item = items.FirstOrDefault();
@@ -62,7 +62,7 @@ namespace Scatterbrain.Data
             return Task.FromResult(JsonConvert.DeserializeObject<ObservableCollection<string>>(item.Content));
         }
 
-        public static Task WriteDepartments(IEnumerable<string> departments)
+        public static Task StoreDepartments(IEnumerable<string> departments)
         {
             _db.Table<TheList>().Connection.Execute($"DELETE FROM {Constants.DepartmentTableName};");
             _db.Insert(new Department { Content = JsonConvert.SerializeObject(departments) });

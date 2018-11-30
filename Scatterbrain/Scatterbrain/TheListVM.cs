@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
-using TheListRepo = Scatterbrain.Data.TheListRepository;
+using ScatterbrainRepo = Scatterbrain.Data.ScatterbrainRepository;
 using System.Threading.Tasks.Dataflow;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
@@ -30,7 +30,7 @@ namespace Scatterbrain
 
         private void InitTheList()
         {
-            var theList = TheListRepo.Read().GetAwaiter().GetResult();
+            var theList = ScatterbrainRepo.GetSubjects().GetAwaiter().GetResult();
             if (theList != null)
             {
                 TheList = theList;
@@ -56,7 +56,7 @@ namespace Scatterbrain
 
         private void InitDeps()
         {
-            var deps = TheListRepo.ReadDepartments().GetAwaiter().GetResult();
+            var deps = ScatterbrainRepo.GetDepartments().GetAwaiter().GetResult();
             if(deps != null)
             {
                 Deps = deps;
@@ -97,14 +97,14 @@ namespace Scatterbrain
             }
             if (isDepsChanged)
             {
-                TheListRepo.WriteDepartments(Deps);
+                ScatterbrainRepo.StoreDepartments(Deps).GetAwaiter().GetResult();
             }
 
             if (_isSelfUpdatingDeps)
             {
                 return;
             }
-            TheListRepo.Write(TheList).GetAwaiter().GetResult();
+            ScatterbrainRepo.StoreSubjects(TheList).GetAwaiter().GetResult();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -147,7 +147,7 @@ namespace Scatterbrain
                                 }
                                 dep.Subjects.Remove(s);
                             }
-                            TheListRepo.Write(TheList);
+                            ScatterbrainRepo.StoreSubjects(TheList);
                         }
                         finally
                         {
@@ -189,7 +189,7 @@ namespace Scatterbrain
                                 return;
                             }
                             dep.Subjects.Add(s);
-                            TheListRepo.Write(TheList);
+                            ScatterbrainRepo.StoreSubjects(TheList);
                         }
                         finally
                         {
@@ -218,7 +218,7 @@ namespace Scatterbrain
                     OnUI(() =>
                     {
                         Deps.Remove(d);
-                        TheListRepo.WriteDepartments(Deps);
+                        ScatterbrainRepo.StoreDepartments(Deps);
                     });
                 },
                 new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
@@ -227,13 +227,20 @@ namespace Scatterbrain
             }
         }
 
-        private bool _isBusy;
+        private int _busyCount;
         public bool IsBusy
         {
-            get { return _isBusy; }
+            get { return _busyCount > 0; }
             set
             {
-                _isBusy = value;
+                if (value)
+                {
+                    _busyCount++;
+                }
+                else if(_busyCount > 0)
+                {
+                    _busyCount--;
+                }
                 NotifyPropertyChanged();
             }
         }
