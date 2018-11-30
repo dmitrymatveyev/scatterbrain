@@ -3,6 +3,7 @@ using Scatterbrain.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,15 +51,15 @@ namespace Scatterbrain.Data
             return Task.FromResult(0);
         }
 
-        public static Task<List<string>> ReadDepartments()
+        public static Task<ObservableCollection<string>> ReadDepartments()
         {
             var items = _db.Table<Department>().ToArray();
             var item = items.FirstOrDefault();
             if(item == null)
             {
-                return Task.FromResult<List<string>>(null);
+                return Task.FromResult<ObservableCollection<string>>(null);
             }
-            return Task.FromResult(JsonConvert.DeserializeObject<List<string>>(item.Content));
+            return Task.FromResult(JsonConvert.DeserializeObject<ObservableCollection<string>>(item.Content));
         }
 
         public static Task WriteDepartments(IEnumerable<string> departments)

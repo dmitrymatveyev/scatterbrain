@@ -41,7 +41,7 @@
                                                     Margin="3"
                                                     Text="X"
                                                     BackgroundColor="LightCoral"
-                                                    Command="{Binding BindingContext.Delete, Source={x:Reference root}}"
+                                                    Command="{Binding BindingContext.DelSubj, Source={x:Reference root}}"
                                                     CommandParameter="{Binding}"/>
                                         </StackLayout>
                                         <BoxView HeightRequest="1"

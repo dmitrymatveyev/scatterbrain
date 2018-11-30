@@ -33,31 +33,31 @@ namespace Scatterbrain
 
         private readonly ActionBlock<object> _closeBlock;
 
-        public static BindableProperty AddCommandProperty =
-            BindableProperty.Create("AddCommand", typeof(ICommand), typeof(AddSubject), null);
+        public static BindableProperty AddSubjCommandProperty =
+            BindableProperty.Create("AddSubjCommand", typeof(ICommand), typeof(AddSubject), null);
 
-        public ICommand AddCommand
+        public ICommand AddSubjCommand
         {
-            get { return (ICommand)GetValue(AddCommandProperty); }
-            set { SetValue(AddCommandProperty, value); }
+            get { return (ICommand)GetValue(AddSubjCommandProperty); }
+            set { SetValue(AddSubjCommandProperty, value); }
         }
 
-        public static BindableProperty DepartmentsProperty =
-            BindableProperty.Create("Departments", typeof(IEnumerable), typeof(AddSubject), null);
+        public static BindableProperty DepsProperty =
+            BindableProperty.Create("Deps", typeof(IEnumerable), typeof(AddSubject), null);
 
-        public IEnumerable Departments
+        public IEnumerable Deps
         {
-            get { return (IEnumerable)GetValue(DepartmentsProperty); }
-            set { SetValue(DepartmentsProperty, value); }
+            get { return (IEnumerable)GetValue(DepsProperty); }
+            set { SetValue(DepsProperty, value); }
         }
 
-        public static BindableProperty DeleteDepartmentCommandProperty =
-            BindableProperty.Create("DeleteDepartmentCommand", typeof(ICommand), typeof(AddSubject), null);
+        public static BindableProperty DelDepCommandProperty =
+            BindableProperty.Create("DelDepCommand", typeof(ICommand), typeof(AddSubject), null);
 
-        public ICommand DeleteDepartmentCommand
+        public ICommand DelDepCommand
         {
-            get { return (ICommand)GetValue(DeleteDepartmentCommandProperty); }
-            set { SetValue(DeleteDepartmentCommandProperty, value); }
+            get { return (ICommand)GetValue(DelDepCommandProperty); }
+            set { SetValue(DelDepCommandProperty, value); }
         }
 
         private void Close(object sender, EventArgs e)
