@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using TheListRepo = Scatterbrain.Data.TheListRepository;
 using System.Threading.Tasks.Dataflow;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 
 namespace Scatterbrain
 {
@@ -223,6 +224,17 @@ namespace Scatterbrain
                 new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 });
 
                 return _delDep = new Command<string>(d => block.Post(d));
+            }
+        }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                _isBusy = value;
+                NotifyPropertyChanged();
             }
         }
     }

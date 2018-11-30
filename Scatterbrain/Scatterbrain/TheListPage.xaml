@@ -7,35 +7,36 @@
              xmlns:localization="clr-namespace:Scatterbrain.Localization"
              x:Class="Scatterbrain.TheListPage"
              x:Name="root">
-    <StackLayout>
-        <Button Text="{localization:Translate ADD}" BackgroundColor="LightGreen" Clicked="AddSubject"/>
-        <sflistview:SfListView x:Name="departments"
+    <Grid>
+        <StackLayout>
+            <Button Text="{localization:Translate ADD}" BackgroundColor="LightGreen" Clicked="AddSubject"/>
+            <sflistview:SfListView x:Name="departments"
                                BindingContext="{Binding TheList}"
                                ItemsSource="{Binding Departments}"
                                DragStartMode="OnHold"
                                AutoFitMode="Height"
                                SelectionMode="None"
                                VerticalOptions="StartAndExpand">
-            <sflistview:SfListView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding Title}"
+                <sflistview:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Title}"
                                HorizontalOptions="Center"
                                HeightRequest="30"
                                Margin="0,3,0,0"
                                FontSize="Large"/>
-                        <controls:JustListView ItemsSource="{Binding Subjects}">
-                            <controls:JustListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
-                                        <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
-                                            <Label Text="{Binding Description}"
+                            <controls:JustListView ItemsSource="{Binding Subjects}">
+                                <controls:JustListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand">
+                                                <Label Text="{Binding Description}"
                                                    HorizontalOptions="StartAndExpand"
                                                    Margin="3,0,0,0"
                                                    FontSize="Medium"
                                                    VerticalOptions="Center"/>
-                                            <Editor Text="{Binding Description}" HorizontalOptions="StartAndExpand" IsVisible="False"/>
-                                            <Button HorizontalOptions="End"
+                                                <Editor Text="{Binding Description}" HorizontalOptions="StartAndExpand" IsVisible="False"/>
+                                                <Button HorizontalOptions="End"
                                                     HeightRequest="30"
                                                     WidthRequest="30"
                                                     Margin="3"
@@ -43,23 +44,25 @@
                                                     BackgroundColor="LightCoral"
                                                     Command="{Binding BindingContext.DelSubj, Source={x:Reference root}}"
                                                     CommandParameter="{Binding}"/>
-                                        </StackLayout>
-                                        <BoxView HeightRequest="1"
+                                            </StackLayout>
+                                            <BoxView HeightRequest="1"
                                                      WidthRequest="1000"
                                                      HorizontalOptions="CenterAndExpand"
                                                      VerticalOptions="End"
                                                      BackgroundColor="LightGray"
                                                      Margin="30,0,30,0"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </controls:JustListView.ItemTemplate>
-                            <controls:JustListView.Behaviors>
-                                <behaviors:SubjectsBehavior Departments="{x:Reference departments}"/>
-                            </controls:JustListView.Behaviors>
-                        </controls:JustListView>
-                    </StackLayout>
-                </DataTemplate>
-            </sflistview:SfListView.ItemTemplate>
-        </sflistview:SfListView>
-    </StackLayout>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </controls:JustListView.ItemTemplate>
+                                <controls:JustListView.Behaviors>
+                                    <behaviors:SubjectsBehavior Departments="{x:Reference departments}"/>
+                                </controls:JustListView.Behaviors>
+                            </controls:JustListView>
+                        </StackLayout>
+                    </DataTemplate>
+                </sflistview:SfListView.ItemTemplate>
+            </sflistview:SfListView>
+        </StackLayout>
+        <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HeightRequest="50" VerticalOptions="End"/>
+    </Grid>
 </ContentPage>
